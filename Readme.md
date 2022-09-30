@@ -1,11 +1,18 @@
 ### What is Terraform ?
 
-It is an open source tool to automate and manage your infrastructure.
+It is an open source Infrastructure as Code (IAC) tool to automate and manage your infrastructure.
 
-### What main commands in Terraform ?
+### Configuration Management vs Infrastructure Provisioning tool
 
-- Init - To initialize a terraform files
-- Refresh - Queries infrastructure to get current state
-- Plan - Creates an execution plan
-- Apply - Executes the plan
-- Destroy - Deletes the resources
+| Configuration Management                                              | Infrastructure Provisioner                           |
+| --------------------------------------------------------------------- | ---------------------------------------------------- |
+| Primarily designed to install and manage software on existing servers | Primarily provisions the servers and infrastructures |
+| Popular tools - Ansible, Chef and Salt stack                          | Popular tools - Terraform and Pulumi                 |
+
+### What are the main commands available in Terraform ?
+
+- init - To initialize a terraform files
+- refresh - Queries infrastructure to get current state
+- plan - Shows preview changes required by the current configuration
+- apply - Executes the plan by creating or updating infra
+- destroy - Deletes previously created resources
