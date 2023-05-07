@@ -9,10 +9,73 @@ It is an open source Infrastructure as Code (IAC) tool to automate and manage yo
 | Primarily designed to install and manage software on existing servers | Primarily provisions the servers and infrastructures |
 | Popular tools - Ansible, Chef and Salt stack                          | Popular tools - Terraform and Pulumi                 |
 
-### What are the main commands available in Terraform ?
+> **Note**
+> Please look at the [index](Index.md) file for easier navigation and better overview of the project.
 
-- init - To initialize a terraform files
-- refresh - Queries infrastructure to get current state
-- plan - Shows preview changes required by the current configuration
-- apply - Executes the plan by creating or updating infra
-- destroy - Deletes previously created resources
+<details>
+
+  <summary> 1. What are the main commands available in Terraform ? </summary>
+
+  <p>
+
+- **init** - To initialize a terraform files
+- **validate** -
+- **plan** - Shows preview changes required by the current configuration
+- **apply** - Executes the plan by creating or updating infra
+- **destroy** - Deletes previously created resource
+- **refresh** - Queries infrastructure to get current state
+- **fmt** -
+
+  </p>
+
+</details>
+
+---
+
+<details>
+
+  <summary>  </summary>
+
+  <p>
+
+  </p>
+
+</details>
+
+---
+
+<details>
+
+  <summary>  </summary>
+
+  <p>
+
+  </p>
+
+</details>
+
+---
+
+<details>
+
+  <summary>  </summary>
+
+  <p>
+
+  </p>
+
+</details>
+
+---
+
+<details>
+
+  <summary>  </summary>
+
+  <p>
+
+  </p>
+
+</details>
+
+---
