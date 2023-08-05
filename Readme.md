@@ -19,12 +19,12 @@ It is an open source Infrastructure as Code (IAC) tool to automate and manage yo
   <p>
 
 - **init** - To initialize a terraform files
-- **validate** -
+- **validate** - Checks wether tf files are syntactically valid
 - **plan** - Shows preview changes required by the current configuration
 - **apply** - Executes the plan by creating or updating infra
 - **destroy** - Deletes previously created resource
 - **refresh** - Queries infrastructure to get current state
-- **fmt** -
+- **fmt** - Rewrites all Terraform configuration files to a canonical format. (Includes - `.tf` and `.tfvars` but not the `.tf.json` or `.tfvars.json`)
 
   </p>
 

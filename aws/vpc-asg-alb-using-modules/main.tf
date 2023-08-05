@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "5.10.0"
     }
   }
@@ -18,11 +18,13 @@ module "my_vpc" {
   private_subnets = ["10.10.1.0/24", "10.10.2.0/24", "10.10.3.0/24"]
   public_subnets  = ["10.10.101.0/24", "10.10.102.0/24", "10.10.103.0/24"]
 
-  single_nat_gateway = true
-  create_igw = true
+  single_nat_gateway     = true
+  enable_nat_gateway     = true
+  one_nat_gateway_per_az = false
+  create_igw             = true
 
   tags = {
-    Terraform = "true"
+    Terraform   = "true"
     Environment = "dev"
   }
 }
@@ -34,7 +36,7 @@ module "my_sg" {
   description = "Security group for web server"
   vpc_id      = module.my_vpc.vpc_id
 
-  ingress_cidr_blocks      = [module.my_vpc.vpc_cidr_block]
+  ingress_cidr_blocks = [module.my_vpc.vpc_cidr_block]
   ingress_with_cidr_blocks = [
     {
       from_port   = 80
