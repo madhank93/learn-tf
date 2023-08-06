@@ -10,7 +10,7 @@ It is an open source Infrastructure as Code (IAC) tool to automate and manage yo
 | Popular tools - Ansible, Chef and Salt stack                          | Popular tools - Terraform and Pulumi                 |
 
 > **Note**
-> Please look at the [index](/Index.md) file for easier navigation and better overview of the project.
+> Please look at the [index](Index.md) file for easier navigation and better overview of the project.
 
 1. <details>
    <summary>What are the main commands available in Terraform ?</summary>
