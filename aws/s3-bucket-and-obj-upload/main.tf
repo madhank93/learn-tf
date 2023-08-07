@@ -7,7 +7,7 @@ resource "aws_s3_bucket" "static-bucket" {
 
 resource "aws_s3_object" "pdf-file" {
   bucket = aws_s3_bucket.static-bucket.id
-  key = "sample-file"
+  key    = "sample-file"
   source = "sample.pdf"
 }
 

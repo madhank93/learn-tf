@@ -23,6 +23,6 @@ resource "aws_iam_policy" "admin-policy" {
 
 # Attaching the admin user with adminstator access policy
 resource "aws_iam_user_policy_attachment" "admin-policy-attachment" {
-    user = aws_iam_user.admin-user.name
-    policy_arn = aws_iam_policy.admin-policy.arn
+  user       = aws_iam_user.admin-user.name
+  policy_arn = aws_iam_policy.admin-policy.arn
 }
