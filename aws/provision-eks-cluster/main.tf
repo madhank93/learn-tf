@@ -53,7 +53,6 @@ module "eks" {
 
   eks_managed_node_group_defaults = {
     ami_type = "AL2_x86_64"
-
   }
 
   eks_managed_node_groups = {
@@ -76,6 +75,16 @@ module "eks" {
       max_size     = 2
       desired_size = 1
     }
+  }
+}
+
+resource "aws_eks_identity_provider_config" "id_provider" {
+  cluster_name = local.cluster_name
+
+  oidc {
+    client_id                     = ["sts.amazonaws.com"]
+    identity_provider_config_name = "oidc"
+    issuer_url                    = module.eks.cluster_oidc_issuer_url
   }
 }
 
@@ -105,4 +114,58 @@ resource "aws_eks_addon" "ebs-csi" {
     "eks_addon" = "ebs-csi"
     "terraform" = "true"
   }
+}
+
+provider "helm" {
+
+  kubernetes {
+    host                   = module.eks.cluster_endpoint
+    cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+
+    exec {
+      api_version = "client.authentication.k8s.io/v1alpha1"
+      args        = ["eks", "get-token", "--cluster-name", var.cluster-name]
+      command     = "aws"
+    }
+  }
+}
+
+resource "helm_release" "aws-load-balancer-controller" {
+  #depends_on = [null_resource.post-policy,  aws_iam_role.aws-node]
+  depends_on = [null_resource.post-policy]
+  name       = "aws-load-balancer-controller"
+
+
+  repository = "https://aws.github.io/eks-charts"
+  chart      = "aws-load-balancer-controller"
+  namespace  = "kube-system"
+
+  set {
+    name  = "clusterName"
+    value = data.aws_eks_cluster.demo.name
+  }
+
+  set {
+    name  = "serviceAccount.create"
+    value = "false"
+  }
+  set {
+    name  = "serviceAccount.name"
+    value = "aws-node"
+  }
+
+  set {
+    name  = "image.repository"
+    value = format("602401143452.dkr.ecr.%s.amazonaws.com/amazon/aws-load-balancer-controller", var.aws_region)
+  }
+
+  set {
+    name  = "image.tag"
+    value = "v2.4.0"
+  }
+  set {
+    name  = "serviceAccount\\.server\\.annotations\\.eks\\.amazonaws\\.com/role-arn"
+    value = "arn:aws:iam::${var.account_id}:role/aws-node"
+  }
+
 }
