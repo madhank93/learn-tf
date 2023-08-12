@@ -25,12 +25,12 @@ module "vpc" {
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   public_subnets  = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
 
-  enable_nat_gateway   = true
-  single_nat_gateway   = true
+  enable_nat_gateway     = true
+  single_nat_gateway     = true
   one_nat_gateway_per_az = false
 
   enable_dns_hostnames = true
-  enable_dns_support = true
+  enable_dns_support   = true
 
   public_subnet_tags = {
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
@@ -85,7 +85,7 @@ resource "aws_eks_identity_provider_config" "id_provider" {
   cluster_name = local.cluster_name
 
   oidc {
-    client_id                     = ["sts.amazonaws.com"]
+    client_id                     = "sts.amazonaws.com"
     identity_provider_config_name = "oidc"
     issuer_url                    = module.eks.cluster_oidc_issuer_url
   }
@@ -127,7 +127,7 @@ provider "helm" {
 
     exec {
       api_version = "client.authentication.k8s.io/v1alpha1"
-      args        = ["eks", "get-token", "--cluster-name", var.cluster-name]
+      args        = ["eks", "get-token", "--cluster-name", local.cluster_name]
       command     = "aws"
     }
   }
@@ -138,13 +138,11 @@ resource "helm_release" "aws-load-balancer-controller" {
   repository = "https://aws.github.io/eks-charts"
   chart      = "aws-load-balancer-controller"
   namespace  = "kube-system"
-  version = "1.5.5"
-
+  version    = "1.5.5"
   set {
     name  = "clusterName"
     value = module.eks.cluster_name
   }
-
   set {
     name  = "serviceAccount.create"
     value = "false"
@@ -153,20 +151,12 @@ resource "helm_release" "aws-load-balancer-controller" {
     name  = "serviceAccount.name"
     value = "aws-node"
   }
-
   set {
     name  = "image.repository"
-    value = format("602401143452.dkr.ecr.%s.amazonaws.com/amazon/aws-load-balancer-controller", var.aws_region)
+    value = format("602401143452.dkr.ecr.%s.amazonaws.com/amazon/aws-load-balancer-controller", var.region)
   }
-
   set {
     name  = "image.tag"
     value = "v2.5.4"
   }
-  
-  set {
-    name  = "serviceAccount\\.server\\.annotations\\.eks\\.amazonaws\\.com/role-arn"
-    value = "arn:aws:iam::${var.account_id}:role/aws-node"
-  }
-
 }
