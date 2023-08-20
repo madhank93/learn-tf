@@ -1,13 +1,3 @@
-provider "aws" {
-  region = var.region
-}
-
-data "aws_availability_zones" "available" {}
-
-locals {
-  cluster_name = "my-eks-demo-cluster"
-}
-
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.0.0"
@@ -134,10 +124,6 @@ module "eks" {
       desired_size = 1
     }
   }
-}
-
-data "tls_certificate" "eks" {
-  url = module.eks.cluster_oidc_issuer_url
 }
 
 resource "aws_iam_openid_connect_provider" "eks" {
