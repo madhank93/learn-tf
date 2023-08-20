@@ -106,10 +106,10 @@ module "eks" {
   subnet_ids                     = module.vpc.private_subnets
   cluster_endpoint_public_access = true
 
-  cluster_iam_role_arn	 = aws_iam_role.eks_cluster_role.arn
+  cluster_iam_role_arn = aws_iam_role.eks_cluster_role.arn
 
   eks_managed_node_group_defaults = {
-    ami_type = "AL2_x86_64"
+    ami_type     = "AL2_x86_64"
     iam_role_arn = aws_iam_role.eks_nodegroup_role.iam_role_arn
   }
 

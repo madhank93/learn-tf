@@ -5,7 +5,7 @@ terraform {
       version = "~> 5.7.0"
     }
     tls = {
-      source = "hashicorp/tls"
+      source  = "hashicorp/tls"
       version = "4.0.4"
     }
   }
@@ -13,7 +13,7 @@ terraform {
   backend "s3" {
     bucket = "my-eks-cluster-01"
     region = "us-east-1"
-    key = "terraform.tfstate"
+    key    = "terraform.tfstate"
   }
 }
 
